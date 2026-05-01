@@ -1,0 +1,65 @@
+let currentStreak = 0;
+let eventA = null;
+let eventB = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize the game
+    startNewRound();
+});
+
+function startNewRound() {
+    // 1. Get two unique random events
+    const indices = [];
+    while (indices.length < 2) {
+        const r = Math.floor(Math.random() * historicalEvents.length);
+        if (!indices.includes(r)) indices.push(r);
+    }
+
+    eventA = historicalEvents[indices[0]];
+    eventB = historicalEvents[indices[1]];
+
+    // Ensure we don't have a tie in years (optional, but makes the game cleaner)
+    if (eventA.year === eventB.year) {
+        return startNewRound();
+    }
+
+    // 2. Update UI Buttons
+    const btnA = document.getElementById('choice-a');
+    const btnB = document.getElementById('choice-b');
+    
+    // Set text
+    btnA.innerText = eventA.title;
+    btnB.innerText = eventB.title;
+
+    // Reset styles/classes from previous round
+    btnA.className = 'game-button';
+    btnB.className = 'game-button';
+    
+    // Update Streak Display
+    document.getElementById('streak-display').innerText = `Current Streak: ${currentStreak}`;
+}
+
+function checkAnswer(choice) {
+    const selected = (choice === 'A') ? eventA : eventB;
+    const other = (choice === 'A') ? eventB : eventA;
+
+    // 3. Logic: Did the selected event happen earlier?
+    // Remember: -3500 is smaller (earlier) than -1000
+    if (selected.year < other.year) {
+        // Correct!
+        currentStreak++;
+        alert(`Correct! ${selected.title} happened in ${formatYear(selected.year)}, which is before ${formatYear(other.year)}.`);
+    } else {
+        // Wrong!
+        alert(`Fumble! ${selected.title} was in ${formatYear(selected.year)}, but ${other.title} happened first in ${formatYear(other.year)}.`);
+        currentStreak = 0;
+    }
+
+    // 4. Persistence & Next Round
+    startNewRound();
+}
+
+// Helper to format years like the other pages
+function formatYear(year) {
+    return year < 0 ? `${Math.abs(year)} BCE` : year;
+}

@@ -1,0 +1,28 @@
+<div class="container">
+    <h2>Historical Ledger</h2>
+    
+    <div id="empty-message" style="display:none; margin: 20px;">
+        <p>No events scouted yet. Return home to find one!</p>
+    </div>
+
+    <table id="ledger-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <thead>
+            <tr style="border-bottom: 2px solid var(--bears-orange);">
+                <th>Year</th>
+                <th>Event</th>
+                <th>Category</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody id="ledger-body">
+            <!-- Events will be injected here -->
+        </tbody>
+    </table>
+
+    <div style="margin-top: 30px;">
+        <a href="index.html" style="color: var(--white); text-decoration: none; margin-right: 20px;">[ Back to Home ]</a>
+        <button id="clear-ledger-btn" style="background: var(--bears-orange); color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px;">
+            Clear History
+        </button>
+    </div>
+</div>
