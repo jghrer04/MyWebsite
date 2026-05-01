@@ -268,36 +268,23 @@ const historicalEvents = [
 ];
 
 
+// --- ROULETTE LOGIC (Home Page) ---
 const triggerBtn = document.getElementById('trigger-btn');
 const displayArea = document.getElementById('event-display');
 
-if (triggerBtn) {
+if (triggerBtn && displayArea) {
     triggerBtn.addEventListener('click', function() {
-        console.log("Button clicked!");
-
-        // 1. Pick a random event from the list
         const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
-
-        // 2. Inject the HTML into the display area
+        
+        // Display the event
         displayArea.innerHTML = `
-            <h2 style="color: #238636; margin-bottom: 10px;">${randomEvent.title}</h2>
-            <div style="margin-bottom: 15px;">
-                <span class="event-detail" style="color: #ffa500; margin-right: 20px;">
-                    <strong>YEAR:</strong> ${randomEvent.year}
-                </span>
-                <span class="event-detail" style="color: #58a6ff; text-transform: uppercase; border: 1px solid #30363d;">
-                    ${randomEvent.category}
-                </span>
-            </div>
-            <p style="color: #8b949e; line-height: 1.6; font-style: italic;">
-                ${randomEvent.description}
-            </p>
+            <h2 style="color: #238636;">${randomEvent.title}</h2>
+            <p style="color: #ffa500;">YEAR: ${randomEvent.year}</p>
+            <p style="color: #8b949e;">${randomEvent.description}</p>
         `;
 
-        // 3. SAVE TO LEDGER (This part goes inside the same function!)
+        // Save to Ledger
         let savedTimeline = JSON.parse(localStorage.getItem('myTimeline')) || [];
-        
-        // Add it to the list if it's not already there
         if (!savedTimeline.some(e => e.title === randomEvent.title)) {
             savedTimeline.push(randomEvent);
             localStorage.setItem('myTimeline', JSON.stringify(savedTimeline));
@@ -305,38 +292,23 @@ if (triggerBtn) {
     });
 }
 
-// Add a 'Save' button in your HTML or let it save automatically:
-btn.addEventListener('click', () => {
-    const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
-    
-    // 1. Show it on screen
-    displayArea.innerHTML = `<h2>${randomEvent.title}</h2>...`;
-
-    // 2. SAVE IT TO THE LEDGER
-    let savedTimeline = JSON.parse(localStorage.getItem('myTimeline')) || [];
-    savedTimeline.push(randomEvent);
-    localStorage.setItem('myTimeline', JSON.stringify(savedTimeline));
-});
-
-} else {
-    console.log("Error: Could not find trigger-btn");
-   const arenaBtn = document.getElementById('arena-trigger');
+// --- ARENA LOGIC (Arena Page) ---
+const arenaBtn = document.getElementById('arena-trigger');
 const arenaDisplay = document.getElementById('arena-display');
 
-if (arenaBtn) {
-    arenaBtn.addEventListener('click', () => {
+if (arenaBtn && arenaDisplay) {
+    arenaBtn.addEventListener('click', function() {
         const e1 = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
         const e2 = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
 
         arenaDisplay.innerHTML = `
-            <p>Click the event that happened <strong>FIRST</strong> (further back in time):</p>
-            <div style="display: flex; justify-content: space-between; gap: 20px;">
+            <p>Click the event that happened <strong>FIRST</strong>:</p>
+            <div style="display: flex; gap: 20px; justify-content: center;">
                 <div class="arena-card" onclick="checkAnswer(${e1.year}, ${e2.year}, 'left')">
                     <h3>${e1.title}</h3>
                     <p id="year-left" style="visibility: hidden; color: #ffa500;">${e1.year}</p>
                 </div>
-                <div style="align-self: center; font-weight: bold; color: #ff4d4d;">VS</div>
-                <div class="arena-card" onclick="checkAnswer(${e2.year}, ${e2.year}, 'right')">
+                <div class="arena-card" onclick="checkAnswer(${e2.year}, ${e1.year}, 'right')">
                     <h3>${e2.title}</h3>
                     <p id="year-right" style="visibility: hidden; color: #ffa500;">${e2.year}</p>
                 </div>
@@ -346,27 +318,17 @@ if (arenaBtn) {
     });
 }
 
-// Global function to check the answer
-window.checkAnswer = function(val1, val2, choice) {
-    // Reveal years
+// The global check function for the Arena
+window.checkAnswer = function(y1, y2, choice) {
     document.getElementById('year-left').style.visibility = 'visible';
     document.getElementById('year-right').style.visibility = 'visible';
-    
     const feedback = document.getElementById('feedback');
-    // In history, a smaller number (year) is older
-    const isLeftOlder = parseInt(val1) < parseInt(val2);
     
-    if ((choice === 'left' && isLeftOlder) || (choice === 'right' && !isLeftOlder)) {
-        feedback.innerText = "CORRECT! You've stabilized the timeline.";
-        feedback.style.color = "#2ea043";
-    } else {
-        feedback.innerText = "INCORRECT! The temporal field collapses.";
-        feedback.style.color = "#ff4d4d";
-    }
+    // Check if the chosen one is smaller (older)
+    const correct = (choice === 'left' && y1 < y2) || (choice === 'right' && y2 < y1);
+    feedback.innerText = correct ? "CORRECT!" : "INCORRECT!";
+    feedback.style.color = correct ? "#2ea043" : "#ff4d4d";
 };
-
-
-
 
 
 
