@@ -2,76 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Arena - Chronicle Roulette</title>
+    <title>The Arena</title>
     <style>
-        /* Matching the styling from image_14.png and index.html */
-        body { 
-            background-color: #0d1117; 
-            color: white; 
-            font-family: 'Segoe UI', sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            padding: 20px; 
-        }
-        
-        /* Navigation styling to match index.html */
-        nav { 
-            width: 100%; 
-            max-width: 600px; 
-            display: flex; 
-            justify-content: space-around; 
-            margin-bottom: 40px; 
-        }
-        nav a { 
-            color: #58a6ff; 
-            text-decoration: none; 
-            font-weight: bold; 
-            padding: 10px; 
-            border: 1px solid #30363d; 
-            border-radius: 6px; 
-        }
-
-        /* The Main Box from image_14.png */
-        .arena-container { 
-            text-align: center; 
-            background: #161b22; 
-            padding: 50px; 
-            border-radius: 20px; 
-            border: 2px solid #e94560; /* Using the orange/red border from your image */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            width: 90%; 
-            max-width: 500px; 
-        }
-
-        h1 { color: #e94560; text-transform: uppercase; letter-spacing: 2px; }
-        .stats-box { background: #0d1117; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #30363d; }
+        body { background-color: #0d1117; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        nav { width: 100%; max-width: 600px; display: flex; justify-content: space-around; margin-bottom: 40px; }
+        nav a { color: #58a6ff; text-decoration: none; font-weight: bold; padding: 10px; border: 1px solid #30363d; border-radius: 6px; }
+        .container { text-align: center; background: #161b22; padding: 50px; border-radius: 20px; border: 2px solid #e94560; width: 90%; max-width: 500px; }
+        h1 { color: #e94560; text-transform: uppercase; }
     </style>
 </head>
 <body>
-
     <nav>
         <a href="index.html">Home</a>
         <a href="arena.html">Arena</a>
         <a href="ledger.html">Ledger</a>
     </nav>
-
-    <div class="arena-container">
+    <div class="container">
         <h1>THE ARENA</h1>
-        <p>Current Battle Status</p>
-        
-        <div class="stats-box">
-            <h3 style="color: #ffa500;">Temporal Stability: 98%</h3>
-            <p>The stream of time is currently stable. Roulette operations are clear.</p>
-        </div>
-
-        <div style="margin-top: 30px;">
-            <a href="index.html" style="color: #58a6ff; text-decoration: none;">← Return to Chronicle Roulette</a>
-        </div>
+        <p>Battle Status: <span style="color: #ffa500;">STABLE</span></p>
+        <p>The temporal field is locked. No active combat detected.</p>
     </div>
-
 </body>
 </html>
