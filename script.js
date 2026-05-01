@@ -279,9 +279,7 @@ if (triggerBtn) {
         const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
         
         // Inject the HTML into the display area
-          btn.addEventListener('click', () => {
-        const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
-        
+     
         displayArea.innerHTML = `
             <h2 style="color: #238636; margin-bottom: 10px;">${randomEvent.title}</h2>
             
@@ -297,7 +295,7 @@ if (triggerBtn) {
             <p style="color: #8b949e; line-height: 1.6; font-style: italic;">
                 ${randomEvent.description}
             </p>
-        `;
+            `;
     });
 
 } else {
