@@ -274,29 +274,37 @@ const displayArea = document.getElementById('event-display');
 if (triggerBtn) {
     triggerBtn.addEventListener('click', function() {
         console.log("Button clicked!");
-        
-        // Pick a random event from the list
+
+        // 1. Pick a random event from the list
         const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
-        
-        // Inject the HTML into the display area
-     
+
+        // 2. Inject the HTML into the display area
         displayArea.innerHTML = `
             <h2 style="color: #238636; margin-bottom: 10px;">${randomEvent.title}</h2>
-            
             <div style="margin-bottom: 15px;">
                 <span class="event-detail" style="color: #ffa500; margin-right: 20px;">
                     <strong>YEAR:</strong> ${randomEvent.year}
                 </span>
-                <span class="event-detail" style="color: #58a6ff; text-transform: uppercase; border: 1px solid #30363d; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">
+                <span class="event-detail" style="color: #58a6ff; text-transform: uppercase; border: 1px solid #30363d;">
                     ${randomEvent.category}
                 </span>
             </div>
-
             <p style="color: #8b949e; line-height: 1.6; font-style: italic;">
                 ${randomEvent.description}
             </p>
-            `;
+        `;
+
+        // 3. SAVE TO LEDGER (This part goes inside the same function!)
+        let savedTimeline = JSON.parse(localStorage.getItem('myTimeline')) || [];
+        
+        // Add it to the list if it's not already there
+        if (!savedTimeline.some(e => e.title === randomEvent.title)) {
+            savedTimeline.push(randomEvent);
+            localStorage.setItem('myTimeline', JSON.stringify(savedTimeline));
+        }
     });
+}
+
 // Add a 'Save' button in your HTML or let it save automatically:
 btn.addEventListener('click', () => {
     const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];

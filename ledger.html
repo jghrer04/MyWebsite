@@ -26,21 +26,30 @@
             });
         }
     <body>
-        <script>
-    const savedArea = document.getElementById('ledger-display'); // Make sure this ID exists in ledger.html
-    const savedEvents = JSON.parse(localStorage.getItem('myTimeline')) || [];
+      <script>
+    const ledgerDisplay = document.getElementById('ledger-display');
+    let savedEvents = JSON.parse(localStorage.getItem('myTimeline')) || [];
 
     if (savedEvents.length === 0) {
-        savedArea.innerHTML = "<p>No events saved yet. Go play the Roulette!</p>";
+        ledgerDisplay.innerHTML = "<p style='color: #8b949e; text-align: center;'>Your timeline is empty. Go pull the trigger!</p>";
     } else {
-        savedArea.innerHTML = savedEvents.map(event => `
-            <div id="ledger-display">
-    <!-- The JavaScript will put the saved events here -->
-</div>
+        // THE MAGIC PART: Sort by year (Oldest to Newest)
+        savedEvents.sort((a, b) => parseInt(a.year) - parseInt(b.year));
 
+        ledgerDisplay.innerHTML = savedEvents.map(event => `
+            <div style="border-left: 4px solid #238636; background: #161b22; margin: 15px 0; padding: 15px; border-radius: 0 8px 8px 0;">
+                <span style="color: #ffa500; font-family: monospace; font-weight: bold;">${event.year}</span>
+                <h3 style="color: white; margin: 5px 0;">${event.title}</h3>
+                <p style="color: #8b949e; margin: 0; font-size: 0.9rem;">${event.description}</p>
+            </div>
         `).join('');
     }
-</script>
+<script>
+    
+
+
+
+  
 
 <body>
 <html>
