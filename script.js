@@ -323,8 +323,9 @@ if (arenaBtn && arenaDisplay) {
 // The global check function for the Arena
 window.checkAnswer = function(choice) { // Removed y1, y2 from here
     // Put your code here:
-    const y1 = parseInt(document.getElementById('year-left').innerText);
-    const y2 = parseInt(document.getElementById('year-right').innerText);
+    const y1 = parseInt(document.getElementById('year-left').textContent);
+const y2 = parseInt(document.getElementById('year-right').textContent);
+
 
     document.getElementById('year-left').style.visibility = 'visible';
     document.getElementById('year-right').style.visibility = 'visible';
