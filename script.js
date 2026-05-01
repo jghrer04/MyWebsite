@@ -267,6 +267,57 @@ const historicalEvents = [
     { title: "Founding of the World Health Organization", year: 1948, category: "culture", description: "A specialized agency of the UN for health." }
 ];
 
+const triggerBtn = document.getElementById('trigger-btn');
+const displayArea = document.getElementById('event-display');
+const arenaBtn = document.getElementById('arena-trigger');
+const arenaDisplay = document.getElementById('arena-display');
+
+// --- HOME PAGE LOGIC ---
+if (triggerBtn && displayArea) {
+    triggerBtn.onclick = function() {
+        const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
+        displayArea.innerHTML = `<h2>${randomEvent.title}</h2><p>${randomEvent.year}</p>`;
+        
+        let saved = JSON.parse(localStorage.getItem('myTimeline')) || [];
+        if (!saved.some(e => e.title === randomEvent.title)) {
+            saved.push(randomEvent);
+            localStorage.setItem('myTimeline', JSON.stringify(saved));
+        }
+    };
+}
+
+// --- ARENA PAGE LOGIC ---
+if (arenaBtn && arenaDisplay) {
+    arenaBtn.onclick = function() {
+        const e1 = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
+        const e2 = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
+        arenaDisplay.innerHTML = `
+            <div style="display: flex; gap: 20px; justify-content: center;">
+                <div class="arena-card" onclick="checkAnswer(${e1.year}, ${e2.year}, 'left')">
+                    <h3>${e1.title}</h3>
+                    <p id="year-left" style="visibility:hidden; color: #ffa500;">${e1.year}</p>
+                </div>
+                <div class="arena-card" onclick="checkAnswer(${e2.year}, ${e1.year}, 'right')">
+                    <h3>${e2.title}</h3>
+                    <p id="year-right" style="visibility:hidden; color: #ffa500;">${e2.year}</p>
+                </div>
+            </div>
+            <h2 id="feedback" style="margin-top: 20px;"></h2>`;
+    };
+}
+
+// --- GLOBAL FUNCTION ---
+window.checkAnswer = function(y1, y2, choice) {
+    document.getElementById('year-left').style.visibility = 'visible';
+    document.getElementById('year-right').style.visibility = 'visible';
+    const feedback = document.getElementById('feedback');
+    
+    // Logic: Choice is correct if left was picked and y1 < y2, OR right was picked and y2 < y1
+    const isCorrect = (choice === 'left' && y1 < y2) || (choice === 'right' && y2 < y1);
+    
+    feedback.innerText = isCorrect ? "CORRECT!" : "INCORRECT!";
+    feedback.style.color = isCorrect ? "#2ea043" : "#ff4d4d";
+};
 
 // --- ROULETTE LOGIC (Home Page) ---
 const triggerBtn = document.getElementById('trigger-btn');
