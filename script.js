@@ -321,16 +321,21 @@ if (arenaBtn && arenaDisplay) {
 }
 
 // The global check function for the Arena
-window.checkAnswer = function(y1, y2, choice) {
+window.checkAnswer = function(choice) { // Removed y1, y2 from here
+    // Put your code here:
+    const y1 = parseInt(document.getElementById('year-left').innerText);
+    const y2 = parseInt(document.getElementById('year-right').innerText);
+
     document.getElementById('year-left').style.visibility = 'visible';
     document.getElementById('year-right').style.visibility = 'visible';
     const feedback = document.getElementById('feedback');
-    
-    // Check if the chosen one is smaller (older)
+
+    // The rest of your logic stays the same
     const correct = (choice === 'left' && y1 < y2) || (choice === 'right' && y2 < y1);
     feedback.innerText = correct ? "CORRECT!" : "INCORRECT!";
     feedback.style.color = correct ? "#2ea043" : "#ff4d4d";
 };
+
 
 
 
