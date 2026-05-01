@@ -272,20 +272,6 @@ const displayArea = document.getElementById('event-display');
 const arenaBtn = document.getElementById('arena-trigger');
 const arenaDisplay = document.getElementById('arena-display');
 
-// --- HOME PAGE LOGIC ---
-if (triggerBtn && displayArea) {
-    triggerBtn.onclick = function() {
-        const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
-        displayArea.innerHTML = `<h2>${randomEvent.title}</h2><p>${randomEvent.year}</p>`;
-        
-        let saved = JSON.parse(localStorage.getItem('myTimeline')) || [];
-        if (!saved.some(e => e.title === randomEvent.title)) {
-            saved.push(randomEvent);
-            localStorage.setItem('myTimeline', JSON.stringify(saved));
-        }
-    };
-}
-
 
 
 // --- ROULETTE LOGIC (Home Page) ---
