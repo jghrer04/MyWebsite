@@ -268,10 +268,6 @@ const historicalEvents = [
 ];
 
 
-
-
-
-
 const triggerBtn = document.getElementById('trigger-btn');
 const displayArea = document.getElementById('event-display');
 
@@ -283,11 +279,27 @@ if (triggerBtn) {
         const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
         
         // Inject the HTML into the display area
+          btn.addEventListener('click', () => {
+        const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
+        
         displayArea.innerHTML = `
-            <h2 style="color: #238636; margin-top: 20px;">${randomEvent.title}</h2>
-            <p style="color: #ffa500; font-weight: bold; font-family: monospace;">YEAR: ${randomEvent.year}</p>
+            <h2 style="color: #238636; margin-bottom: 10px;">${randomEvent.title}</h2>
+            
+            <div style="margin-bottom: 15px;">
+                <span class="event-detail" style="color: #ffa500; margin-right: 20px;">
+                    <strong>YEAR:</strong> ${randomEvent.year}
+                </span>
+                <span class="event-detail" style="color: #58a6ff; text-transform: uppercase; border: 1px solid #30363d; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">
+                    ${randomEvent.category}
+                </span>
+            </div>
+
+            <p style="color: #8b949e; line-height: 1.6; font-style: italic;">
+                ${randomEvent.description}
+            </p>
         `;
     });
+
 } else {
     console.log("Error: Could not find trigger-btn");
 }
