@@ -1,28 +1,30 @@
-<div class="container">
-    <h2>Historical Ledger</h2>
-    
-    <div id="empty-message" style="display:none; margin: 20px;">
-        <p>No events scouted yet. Return home to find one!</p>
-    </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Historical Ledger</title>
+    <style>
+        body { background: #0d1117; color: white; font-family: sans-serif; padding: 40px; text-align: center; }
+        .entry { background: #161b22; border-left: 4px solid #58a6ff; margin: 10px auto; padding: 15px; max-width: 500px; text-align: left; }
+        a { color: #58a6ff; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>Your Saved Timeline</h1>
+    <div id="timeline-list"></div>
+    <br>
+    <a href="index.html">← Back to Roulette</a>
 
-    <table id="ledger-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-        <thead>
-            <tr style="border-bottom: 2px solid var(--bears-orange);">
-                <th>Year</th>
-                <th>Event</th>
-                <th>Category</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody id="ledger-body">
-            <!-- Events will be injected here -->
-        </tbody>
-    </table>
-
-    <div style="margin-top: 30px;">
-        <a href="index.html" style="color: var(--white); text-decoration: none; margin-right: 20px;">[ Back to Home ]</a>
-        <button id="clear-ledger-btn" style="background: var(--bears-orange); color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px;">
-            Clear History
-        </button>
-    </div>
-</div>
+    <script>
+        const list = document.getElementById('timeline-list');
+        const saved = JSON.parse(localStorage.getItem('myTimeline')) || [];
+        
+        if(saved.length === 0) {
+            list.innerHTML = "<p>No events saved yet. Go play the Roulette!</p>";
+        } else {
+            saved.forEach(event => {
+                list.innerHTML += `<div class="entry"><strong>${event.title}</strong><br>${event.date}</div>`;
+            });
+        }
+    </script>
+</body>
+</html>

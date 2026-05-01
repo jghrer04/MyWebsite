@@ -263,79 +263,53 @@ const historicalEvents = [
     { title: "Founding of the World Health Organization", year: 1948, category: "culture", description: "A specialized agency of the UN for health." }
 ];
 
-console.log(`Successfully loaded ${historicalEvents.length} events!`);
-// Function to calculate the precise time difference
-function updateLiveCounter(eventYear) {
-    const counterElement = document.getElementById('live-counter');
-    if (!counterElement) return;
+let activeInterval;
+let currentEvent = null;
 
-    const update = () => {
+const btn = document.getElementById('trigger-btn');
+const display = document.getElementById('event-display');
+const shareBtn = document.getElementById('share-btn');
+
+btn.addEventListener('click', () => {
+    // 1. Pick Event
+    currentEvent = historyEvents[Math.floor(Math.random() * historyEvents.length)];
+    
+    // 2. Clear old interval if it exists
+    if (activeInterval) clearInterval(activeInterval);
+    
+    // 3. Show Share Button
+    shareBtn.style.display = "inline-block";
+
+    // 4. Start Ticker
+    startTicker(currentEvent);
+});
+
+function startTicker(event) {
+    const eventDate = new Date(event.year, event.month, event.day);
+    
+    activeInterval = setInterval(() => {
         const now = new Date();
-        // Handle BCE years (negative) vs CE years
-        const eventDate = new Date(eventYear, 0, 1);
-        
-        let diff = now.getTime() - eventDate.getTime();
-        
-        // Basic conversion math
-        const msPerDay = 1000 * 60 * 60 * 24;
-        const msPerMonth = msPerDay * 30.44; // Average month length
-        const msPerYear = msPerDay * 365.25;
+        const diff = now - eventDate;
 
-        const years = Math.floor(diff / msPerYear);
-        diff %= msPerYear;
-        const months = Math.floor(diff / msPerMonth);
-        diff %= msPerMonth;
-        const days = Math.floor(diff / msPerDay);
+        const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+        const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
+        const seconds = Math.floor((diff / 1000) % 60);
 
-        counterElement.innerText = `${years} Years, ${months} Months, and ${days} Days ago`;
-    };
-
-    // Run immediately and then every 24 hours (since days are our smallest unit)
-    update();
-    setInterval(update, 86400000); 
+        display.innerHTML = `
+            <h2 style="margin-bottom:0;">${event.title}</h2>
+            <p style="color: #888; margin-top:5;">${event.date}</p>
+            <div class="ticker">
+                DISTANCE FROM TODAY:<br>
+                <strong>${years} Years, ${days} Days, ${seconds} Seconds</strong>
+            </div>
+        `;
+    }, 1000);
 }
 
-// The main Randomizer Function
-function randomizeEvent() {
-    const randomIndex = Math.floor(Math.random() * historicalEvents.length);
-    const selectedEvent = historicalEvents[randomIndex];
-
-    // 1. Update the UI
-    displayEvent(selectedEvent);
-
-    // 2. Save to localStorage
-    localStorage.setItem('savedBearsEvent', JSON.stringify(selectedEvent));
-}
-
-// Function to render the event to the DOM
-function displayEvent(event) {
-    const container = document.querySelector('.container');
-    
-    // Clear previous or update specific elements
-    container.innerHTML = `
-        <h1 style="font-size: 2.5rem;">${event.title}</h1>
-        <p style="color: var(--bears-orange); font-weight: bold;">${event.year < 0 ? Math.abs(event.year) + ' BCE' : event.year}</p>
-        <p>${event.description}</p>
-        <div id="live-counter" style="margin-top: 20px; font-family: monospace; background: rgba(200, 56, 3, 0.2); padding: 10px; border-radius: 8px;"></div>
-        <button id="random-btn" style="margin-top: 20px; padding: 10px 20px; background: var(--bears-orange); color: white; border: none; border-radius: 5px; cursor: pointer;">RANDOMIZE</button>
-    `;
-
-    // Re-attach listener to the new button
-    document.getElementById('random-btn').addEventListener('click', randomizeEvent);
-    
-    // Start the counter
-    updateLiveCounter(event.year);
-}
-
-// --- ON PAGE LOAD ---
-window.addEventListener('DOMContentLoaded', () => {
-    const savedData = localStorage.getItem('savedBearsEvent');
-    
-    if (savedData) {
-        // If the user was here before, show their last event
-        displayEvent(JSON.parse(savedData));
-    } else {
-        // Otherwise, show a default or trigger the first random one
-        randomizeEvent();
-    }
+// 5. Share to Timeline (LocalStorage)
+shareBtn.addEventListener('click', () => {
+    let timeline = JSON.parse(localStorage.getItem('myTimeline')) || [];
+    timeline.push(currentEvent);
+    localStorage.setItem('myTimeline', JSON.stringify(timeline));
+    alert("Saved to Ledger!");
 });

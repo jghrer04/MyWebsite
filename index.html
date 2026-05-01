@@ -3,57 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World - Chicago Bears Edition</title>
+    <title>Chronicle Roulette</title>
     <style>
-        :root {
-            --bears-navy: #0B162A;
-            --bears-orange: #C83803;
-            --white: #FFFFFF;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: var(--bears-navy);
-            color: var(--white);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-        }
-
-        .container {
-            border: 5px solid var(--bears-orange);
-            padding: 2rem;
-            border-radius: 15px;
-            background-color: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        h1 {
-            font-size: 4rem;
-            margin: 0;
-            color: var(--bears-orange);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        p {
-            font-size: 1.2rem;
-            margin-top: 1rem;
-            opacity: 0.9;
-        }
+        body { background-color: #0d1117; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        nav { width: 100%; max-width: 600px; display: flex; justify-content: space-around; margin-bottom: 40px; }
+        nav a { color: #58a6ff; text-decoration: none; font-weight: bold; padding: 10px; border: 1px solid #30363d; border-radius: 6px; transition: 0.3s; }
+        nav a:hover { background: #30363d; }
+        
+        .roulette-container { text-align: center; background: #161b22; padding: 50px; border-radius: 20px; border: 2px solid #238636; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 90%; max-width: 500px; }
+        h1 { color: #238636; letter-spacing: 2px; text-transform: uppercase; }
+        
+        #trigger-btn { background: #238636; color: white; border: none; padding: 20px 40px; font-size: 1.5rem; font-weight: bold; border-radius: 50px; cursor: pointer; transition: transform 0.1s, background 0.3s; box-shadow: 0 4px 15px rgba(35, 134, 54, 0.4); }
+        #trigger-btn:active { transform: scale(0.95); }
+        
+        #event-display { margin-top: 30px; min-height: 150px; }
+        .ticker { color: #ffa500; font-family: 'Courier New', Courier, monospace; font-size: 1.1rem; margin-top: 15px; }
+        #share-btn { margin-top: 20px; background: transparent; border: 1px solid #58a6ff; color: #58a6ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; display: none; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Hello World</h1>
-        <p>Chicago Bears Edition</p>
-        <button id="random-btn">Generate Event</button>
-        <div id="event-display"></div>
-    </div> 
-<script src="script.js"></script>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="arena.html">Arena</a>
+        <a href="ledger.html">Ledger</a>
+    </nav>
+
+    <div class="roulette-container">
+        <h1>Chronicle Roulette</h1>
+        <p>Press the trigger to pull an event from the stream of time.</p>
+        
+        <button id="trigger-btn">TEMPORAL TRIGGER</button>
+
+        <div id="event-display">
+            <!-- Event content will appear here -->
+        </div>
+        
+        <button id="share-btn">Save to Timeline</button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
+
