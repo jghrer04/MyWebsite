@@ -312,5 +312,38 @@ btn.addEventListener('click', () => {
 
 } else {
     console.log("Error: Could not find trigger-btn");
+    // --- ARENA LOGIC ---
+const arenaBtn = document.getElementById('arena-trigger');
+const arenaDisplay = document.getElementById('arena-display');
+
+if (arenaBtn) {
+    arenaBtn.addEventListener('click', () => {
+        // Pick two different random events
+        const event1 = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
+        const event2 = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
+
+        arenaDisplay.innerHTML = `
+            <div style="display: flex; justify-content: space-around; align-items: center;">
+                <div style="width: 40%; border: 1px solid #ff4d4d; padding: 10px;">
+                    <h3>${event1.title}</h3>
+                    <p>${event1.year}</p>
+                </div>
+                <div style="font-weight: bold; color: #ff4d4d;">VS</div>
+                <div style="width: 40%; border: 1px solid #58a6ff; padding: 10px;">
+                    <h3>${event2.title}</h3>
+                    <p>${event2.year}</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px; color: #ffa500;">Collision in the temporal field detected!</p>
+        `;
+    });
 }
+
+
+
+
+
+}
+
+
 

@@ -34,9 +34,10 @@
         savedArea.innerHTML = "<p>No events saved yet. Go play the Roulette!</p>";
     } else {
         savedArea.innerHTML = savedEvents.map(event => `
-            <div class="saved-item">
-                <strong>${event.year}</strong>: ${event.title}
-            </div>
+            <div id="ledger-display">
+    <!-- The JavaScript will put the saved events here -->
+</div>
+
         `).join('');
     }
 </script>

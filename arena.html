@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>The Arena</title>
-    <style>
-        body { background-color: #0d1117; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        nav { width: 100%; max-width: 600px; display: flex; justify-content: space-around; margin-bottom: 40px; }
-        nav a { color: #58a6ff; text-decoration: none; font-weight: bold; padding: 10px; border: 1px solid #30363d; border-radius: 6px; }
-        .container { text-align: center; background: #161b22; padding: 50px; border-radius: 20px; border: 2px solid #e94560; width: 90%; max-width: 500px; }
-        h1 { color: #e94560; text-transform: uppercase; }
-    </style>
-</head>
-<body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="arena.html">Arena</a>
-        <a href="ledger.html">Ledger</a>
-    </nav>
-    <div class="container">
-        <h1>THE ARENA</h1>
-        <p>Battle Status: <span style="color: #ffa500;">STABLE</span></p>
-        <p>The temporal field is locked. No active combat detected.</p>
+    
+<div class="roulette-container">
+    <h1 style="color: #ff4d4d;">THE ARENA</h1>
+    <p>Battle Status: <span style="color: #ffa500;">ACTIVE</span></p>
+    
+    <!-- We need a button specifically for the Arena -->
+    <button id="arena-trigger">INITIATE COMBAT</button>
+
+    <div id="arena-display" style="margin-top: 20px;">
+        <!-- Two events will appear here to "battle" -->
     </div>
+</div>
+
+<!-- Make sure the script is linked -->
+<script src="script.js"></script>
+
 </body>
 </html>
