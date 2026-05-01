@@ -267,10 +267,6 @@ const historicalEvents = [
     { title: "Founding of the World Health Organization", year: 1948, category: "culture", description: "A specialized agency of the UN for health." }
 ];
 
-const triggerBtn = document.getElementById('trigger-btn');
-const displayArea = document.getElementById('event-display');
-const arenaBtn = document.getElementById('arena-trigger');
-const arenaDisplay = document.getElementById('arena-display');
 
 
 
