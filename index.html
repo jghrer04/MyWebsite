@@ -1,32 +1,68 @@
-// This tells you in the "Inspect" console if the file loaded at all
-console.log("Time Stream Connected!");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chronicle Roulette</title>
+    <style>
+        body { background-color: #0d1117; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        nav { width: 100%; max-width: 600px; display: flex; justify-content: space-around; margin-bottom: 40px; }
+        nav a { color: #58a6ff; text-decoration: none; font-weight: bold; padding: 10px; border: 1px solid #30363d; border-radius: 6px; }
+        .container { text-align: center; background: #161b22; padding: 50px; border-radius: 20px; border: 2px solid #238636; width: 90%; max-width: 500px; }
+        h1 { color: #238636; text-transform: uppercase; }
+        /* Style for the button to make it pop like image_16.png */
+        #temporal-trigger { background: #238636; color: white; border: none; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 5px; cursor: pointer; transition: 0.2s; }
+        #temporal-trigger:hover { background: #2ea043; }
+        #event-display { margin-top: 30px; min-height: 100px; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
 
-const historyEvents = [
-    { title: "The Great Fire of London", date: "1666-09-02" },
-    { title: "Moon Landing", date: "1969-07-20" },
-    { title: "Fall of the Berlin Wall", date: "1989-11-09" }
-];
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="arena.html">Arena</a>
+        <a href="ledger.html">Ledger</a>
+    </nav>
 
-const btn = document.getElementById('temporal-trigger');
-const display = document.getElementById('event-display');
-
-// The if(btn) check makes sure the code doesn't crash if it can't find the button
-if (btn) {
-    btn.addEventListener('click', () => {
-        console.log("Trigger Pulled!");
-        const randomEvent = historyEvents[Math.floor(Math.random() * historyEvents.length)];
+    <div class="container">
+        <h1>CHRONICLE ROULETTE</h1>
+        <p>Press the trigger to pull an event from the stream of time.</p>
         
-        display.innerHTML = `
-            <h2 style="color: #238636;">${randomEvent.title}</h2>
-            <p>Date: ${randomEvent.date}</p>
+        <!-- The ID must be exactly 'temporal-trigger' -->
+        <button id="temporal-trigger">TEMPORAL TRIGGER</button>
+
+        <div id="event-display"></div>
+    </div>
+
+    <!-- CRITICAL: This MUST be the last line inside the body -->
+    <script src="script.js"></script>
+</body>
+</html>
+const triggerBtn = document.getElementById('temporal-trigger');
+const displayArea = document.getElementById('event-display');
+
+if (triggerBtn) {
+    triggerBtn.addEventListener('click', () => {
+        console.log("Button was clicked!"); // This helps us debug
+        
+        const event = historyEvents[Math.floor(Math.random() * historyEvents.length)];
+        const eventDate = new Date(event.year, event.month, event.day);
+        const now = new Date();
+        
+        // Calculate the difference
+        const diff = now - eventDate;
+        const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+
+        displayArea.innerHTML = `
+            <h2 style="color: #238636; margin-bottom: 5px;">${event.title}</h2>
+            <p style="color: #ffa500; font-family: monospace; font-weight: bold;">
+                ${years.toLocaleString()} YEARS SINCE THIS MOMENT
+            </p>
         `;
     });
 } else {
-    console.log("Error: Button 'temporal-trigger' not found. Check your HTML ID!");
+    console.log("Error: Could not find the button with ID 'temporal-trigger'");
 }
-<script src="script.js"></script>
-</body>
-</html>
+
 
 
 

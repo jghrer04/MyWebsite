@@ -4,6 +4,9 @@
  * Categories: 'science', 'conflict', 'discovery', 'culture'
  */
 // A list of Historical Events
+
+console.log("Script loaded and running!");
+
 const historicalEvents = [
     // --- ANCIENT ERA (-3500 to 476) ---
     { title: "Invention of Writing", year: -3500, category: "culture", description: "Sumerians develop Cuneiform, marking the transition from prehistory to history." },
@@ -263,53 +266,28 @@ const historicalEvents = [
     { title: "Founding of the World Health Organization", year: 1948, category: "culture", description: "A specialized agency of the UN for health." }
 ];
 
-let activeInterval;
-let currentEvent = null;
+const triggerBtn = document.getElementById('temporal-trigger');
+const displayArea = document.getElementById('event-display');
 
-const btn = document.getElementById('trigger-btn');
-const display = document.getElementById('event-display');
-const shareBtn = document.getElementById('share-btn');
-
-btn.addEventListener('click', () => {
-    // 1. Pick Event
-    currentEvent = historyEvents[Math.floor(Math.random() * historyEvents.length)];
-    
-    // 2. Clear old interval if it exists
-    if (activeInterval) clearInterval(activeInterval);
-    
-    // 3. Show Share Button
-    shareBtn.style.display = "inline-block";
-
-    // 4. Start Ticker
-    startTicker(currentEvent);
-});
-
-function startTicker(event) {
-    const eventDate = new Date(event.year, event.month, event.day);
-    
-    activeInterval = setInterval(() => {
+if (triggerBtn) {
+    triggerBtn.addEventListener('click', () => {
+        console.log("Button was clicked!"); // This helps us debug
+        
+        const event = historyEvents[Math.floor(Math.random() * historyEvents.length)];
+        const eventDate = new Date(event.year, event.month, event.day);
         const now = new Date();
+        
+        // Calculate the difference
         const diff = now - eventDate;
-
         const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-        const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
-        const seconds = Math.floor((diff / 1000) % 60);
 
-        display.innerHTML = `
-            <h2 style="margin-bottom:0;">${event.title}</h2>
-            <p style="color: #888; margin-top:5;">${event.date}</p>
-            <div class="ticker">
-                DISTANCE FROM TODAY:<br>
-                <strong>${years} Years, ${days} Days, ${seconds} Seconds</strong>
-            </div>
+        displayArea.innerHTML = `
+            <h2 style="color: #238636; margin-bottom: 5px;">${event.title}</h2>
+            <p style="color: #ffa500; font-family: monospace; font-weight: bold;">
+                ${years.toLocaleString()} YEARS SINCE THIS MOMENT
+            </p>
         `;
-    }, 1000);
+    });
+} else {
+    console.log("Error: Could not find the button with ID 'temporal-trigger'");
 }
-
-// 5. Share to Timeline (LocalStorage)
-shareBtn.addEventListener('click', () => {
-    let timeline = JSON.parse(localStorage.getItem('myTimeline')) || [];
-    timeline.push(currentEvent);
-    localStorage.setItem('myTimeline', JSON.stringify(timeline));
-    alert("Saved to Ledger!");
-});
