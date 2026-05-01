@@ -1,65 +1,77 @@
-let currentStreak = 0;
-let eventA = null;
-let eventB = null;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Arena - Chronicle Roulette</title>
+    <style>
+        /* Matching the styling from image_14.png and index.html */
+        body { 
+            background-color: #0d1117; 
+            color: white; 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        
+        /* Navigation styling to match index.html */
+        nav { 
+            width: 100%; 
+            max-width: 600px; 
+            display: flex; 
+            justify-content: space-around; 
+            margin-bottom: 40px; 
+        }
+        nav a { 
+            color: #58a6ff; 
+            text-decoration: none; 
+            font-weight: bold; 
+            padding: 10px; 
+            border: 1px solid #30363d; 
+            border-radius: 6px; 
+        }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize the game
-    startNewRound();
-});
+        /* The Main Box from image_14.png */
+        .arena-container { 
+            text-align: center; 
+            background: #161b22; 
+            padding: 50px; 
+            border-radius: 20px; 
+            border: 2px solid #e94560; /* Using the orange/red border from your image */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            width: 90%; 
+            max-width: 500px; 
+        }
 
-function startNewRound() {
-    // 1. Get two unique random events
-    const indices = [];
-    while (indices.length < 2) {
-        const r = Math.floor(Math.random() * historicalEvents.length);
-        if (!indices.includes(r)) indices.push(r);
-    }
+        h1 { color: #e94560; text-transform: uppercase; letter-spacing: 2px; }
+        .stats-box { background: #0d1117; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #30363d; }
+    </style>
+</head>
+<body>
 
-    eventA = historicalEvents[indices[0]];
-    eventB = historicalEvents[indices[1]];
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="arena.html">Arena</a>
+        <a href="ledger.html">Ledger</a>
+    </nav>
 
-    // Ensure we don't have a tie in years (optional, but makes the game cleaner)
-    if (eventA.year === eventB.year) {
-        return startNewRound();
-    }
+    <div class="arena-container">
+        <h1>THE ARENA</h1>
+        <p>Current Battle Status</p>
+        
+        <div class="stats-box">
+            <h3 style="color: #ffa500;">Temporal Stability: 98%</h3>
+            <p>The stream of time is currently stable. Roulette operations are clear.</p>
+        </div>
 
-    // 2. Update UI Buttons
-    const btnA = document.getElementById('choice-a');
-    const btnB = document.getElementById('choice-b');
-    
-    // Set text
-    btnA.innerText = eventA.title;
-    btnB.innerText = eventB.title;
+        <div style="margin-top: 30px;">
+            <a href="index.html" style="color: #58a6ff; text-decoration: none;">← Return to Chronicle Roulette</a>
+        </div>
+    </div>
 
-    // Reset styles/classes from previous round
-    btnA.className = 'game-button';
-    btnB.className = 'game-button';
-    
-    // Update Streak Display
-    document.getElementById('streak-display').innerText = `Current Streak: ${currentStreak}`;
-}
-
-function checkAnswer(choice) {
-    const selected = (choice === 'A') ? eventA : eventB;
-    const other = (choice === 'A') ? eventB : eventA;
-
-    // 3. Logic: Did the selected event happen earlier?
-    // Remember: -3500 is smaller (earlier) than -1000
-    if (selected.year < other.year) {
-        // Correct!
-        currentStreak++;
-        alert(`Correct! ${selected.title} happened in ${formatYear(selected.year)}, which is before ${formatYear(other.year)}.`);
-    } else {
-        // Wrong!
-        alert(`Fumble! ${selected.title} was in ${formatYear(selected.year)}, but ${other.title} happened first in ${formatYear(other.year)}.`);
-        currentStreak = 0;
-    }
-
-    // 4. Persistence & Next Round
-    startNewRound();
-}
-
-// Helper to format years like the other pages
-function formatYear(year) {
-    return year < 0 ? `${Math.abs(year)} BCE` : year;
-}
+</body>
+</html>
