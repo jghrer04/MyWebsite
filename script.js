@@ -266,53 +266,20 @@ const historicalEvents = [
     { title: "Founding of the World Health Organization", year: 1948, category: "culture", description: "A specialized agency of the UN for health." }
 ];
 
-let activeInterval;
-let currentEvent = null;
-
 const btn = document.getElementById('trigger-btn');
 const display = document.getElementById('event-display');
-const shareBtn = document.getElementById('share-btn');
 
-btn.addEventListener('click', () => {
-    // 1. Pick Event
-    currentEvent = historyEvents[Math.floor(Math.random() * historyEvents.length)];
-    
-    // 2. Clear old interval if it exists
-    if (activeInterval) clearInterval(activeInterval);
-    
-    // 3. Show Share Button
-    shareBtn.style.display = "inline-block";
-
-    // 4. Start Ticker
-    startTicker(currentEvent);
-});
-
-function startTicker(event) {
-    const eventDate = new Date(event.year, event.month, event.day);
-    
-    activeInterval = setInterval(() => {
-        const now = new Date();
-        const diff = now - eventDate;
-
-        const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-        const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
-        const seconds = Math.floor((diff / 1000) % 60);
-
+if (btn) {
+    btn.addEventListener('click', () => {
+        // Pick a random event
+        const randomEvent = historyEvents[Math.floor(Math.random() * historyEvents.length)];
+        
+        // Display it using backticks ``
         display.innerHTML = `
-            <h2 style="margin-bottom:0;">${event.title}</h2>
-            <p style="color: #888; margin-top:5;">${event.date}</p>
-            <div class="ticker">
-                DISTANCE FROM TODAY:<br>
-                <strong>${years} Years, ${days} Days, ${seconds} Seconds</strong>
-            </div>
+            <h2 style="color: #238636;">${randomEvent.title}</h2>
+            <p style="color: #ffa500; font-weight: bold;">YEAR: ${randomEvent.year}</p>
         `;
-    }, 1000);
+    });
 }
 
-// 5. Share to Timeline (LocalStorage)
-shareBtn.addEventListener('click', () => {
-    let timeline = JSON.parse(localStorage.getItem('myTimeline')) || [];
-    timeline.push(currentEvent);
-    localStorage.setItem('myTimeline', JSON.stringify(timeline));
-    alert("Saved to Ledger!");
-});
+
