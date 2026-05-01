@@ -25,6 +25,21 @@
                 list.innerHTML += `<div class="entry"><strong>${event.title}</strong><br>${event.date}</div>`;
             });
         }
-    </script>
-</body>
-</html>
+    <body>
+        <script>
+    const savedArea = document.getElementById('ledger-display'); // Make sure this ID exists in ledger.html
+    const savedEvents = JSON.parse(localStorage.getItem('myTimeline')) || [];
+
+    if (savedEvents.length === 0) {
+        savedArea.innerHTML = "<p>No events saved yet. Go play the Roulette!</p>";
+    } else {
+        savedArea.innerHTML = savedEvents.map(event => `
+            <div class="saved-item">
+                <strong>${event.year}</strong>: ${event.title}
+            </div>
+        `).join('');
+    }
+</script>
+
+<body>
+<html>

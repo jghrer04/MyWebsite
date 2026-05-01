@@ -297,6 +297,18 @@ if (triggerBtn) {
             </p>
             `;
     });
+// Add a 'Save' button in your HTML or let it save automatically:
+btn.addEventListener('click', () => {
+    const randomEvent = historicalEvents[Math.floor(Math.random() * historicalEvents.length)];
+    
+    // 1. Show it on screen
+    displayArea.innerHTML = `<h2>${randomEvent.title}</h2>...`;
+
+    // 2. SAVE IT TO THE LEDGER
+    let savedTimeline = JSON.parse(localStorage.getItem('myTimeline')) || [];
+    savedTimeline.push(randomEvent);
+    localStorage.setItem('myTimeline', JSON.stringify(savedTimeline));
+});
 
 } else {
     console.log("Error: Could not find trigger-btn");
